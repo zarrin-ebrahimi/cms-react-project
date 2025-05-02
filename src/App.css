@@ -7,7 +7,7 @@
     width: 3px;
     left:-5%;
     height: 90%;
-    background-color: rgb(222, 217, 217);
+    background-color: rgb(228, 228, 228);
     
 }
 
@@ -17,7 +17,7 @@
     top: 15%;
     width: 20px;
     /* bottom: 50%; */
-    left:-12px;
+    left:-10px;
     height: 50%;
     z-index: 1;
     background-image:url('../public/icons8-rightward-up.png') ;
@@ -28,6 +28,31 @@
    
     background-color:rgba(136, 252, 169, 0.3)
 }
+
+.submenue-sidebar-active{
+    background: #faebf5;
+background: linear-gradient(20deg, rgba(250, 235, 245, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(237, 249, 255, 1) 100%);
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.spin {
+    animation: spin 7s linear infinite;
+}
+
+
+
+
+
+
+
+
+
 .overlay{
     @apply md:hidden  invisible opacity-0 bg-black/40 fixed inset-0 h-full w-full z-10 transition-all ;
 }
