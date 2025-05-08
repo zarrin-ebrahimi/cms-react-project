@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoNotifications } from "react-icons/io5";
 import { HiUsers } from "react-icons/hi2";
 import { IoSettings } from "react-icons/io5";
+import { useSidebar } from '../../Contexts/SidebarContext';
 
 export default function Topbar () {
+  
+  const {toggleSidebar, isMobile} = useSidebar()
+
   return (
-    <div  className='p-3  w-full  '>
+    <>
+        <div  className='p-3  w-full  '>
       <div  className='flex items-center justify-between'>
         {/*Left Items*/}
         <div  className='flex gap-x-4 items-center  '>
-          <FaBarsStaggered   size={23}   className='text-gray-500  md:hidden'/>
+          {isMobile && (
+             <FaBarsStaggered  onClick={toggleSidebar}  size={23}   className='text-gray-500 '/>
+          )}
           <img src="logo.png" alt=""  className='w-8 md:hidden'/>
         </div>
         {/*Right Items */}
@@ -33,5 +40,8 @@ export default function Topbar () {
          </div>
       </div>
     </div>
+
+    </>
+
   )
 }
