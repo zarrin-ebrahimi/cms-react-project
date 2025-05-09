@@ -9,10 +9,6 @@ export default function Sidebar({ menuItems }) {
 
   return (
     <div
-      // className={`border-r-1 h-full  border-gray-200 transition-width duration-300  hidden md:block ${
-      //   isSidebarOpen ? "w-64" : "w-24"
-      // }`}
-
       className={`border-r-1 h-full  border-gray-200 transition-width duration-300
        ${ isMobile 
         ? isSidebarOpen 

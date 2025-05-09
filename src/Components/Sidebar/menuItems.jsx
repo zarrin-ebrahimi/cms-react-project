@@ -16,7 +16,7 @@ export const menuItems = [
   {
     id: "product",
     label: "Product",
-    path: '/produts',
+    path: '/produt',
     icon:(className) => <FaShop className={className}/> ,
     submenu: [
       { id: "add", label: "Add", path: "/product/add"},
