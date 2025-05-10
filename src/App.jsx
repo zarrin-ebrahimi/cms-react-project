@@ -11,7 +11,7 @@ import Users from "./Components/Users/Users";
 import Orders from "./Components/Orders/Orders";
 import Offs from "./Components/Off/Offs";
 import AddNewProduct from "./Components/Products/AddNewProduct";
-
+import ProductsList from "./Components/Products/ProductsList";
 export default function App() {
   return (
     <SidebarProvider>
@@ -27,6 +27,7 @@ export default function App() {
               <Route path="/offs" element={<Offs />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/product/add" element={<AddNewProduct />} />
+              <Route path="/product/list"  element={<ProductsList/>}/>
             </Routes>
 
           </div>

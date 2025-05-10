@@ -12,7 +12,7 @@ export default function Sidebar({ menuItems }) {
       className={`border-r-1 h-full  border-gray-200 transition-width duration-300
        ${ isMobile 
         ? isSidebarOpen 
-        ? "w-64"
+        ? "w-64 fixed z-40 "
         : "w-0 overflow-hidden" 
         : isSidebarOpen
         ? 'w-64' 
