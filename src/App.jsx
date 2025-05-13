@@ -15,9 +15,9 @@ import ProductsList from "./Components/Products/ProductsList";
 export default function App() {
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex h-screen  overflow-hidden">
         <Sidebar menuItems={menuItems} />
-        <div className="flex flex-col flex-grow">
+        <div className="flex-1 flex-grow  overflow-y-auto">
           <Topbar />
           <div className="content flex-grow bg-white px-5 md:px-8 ">
             <Routes>

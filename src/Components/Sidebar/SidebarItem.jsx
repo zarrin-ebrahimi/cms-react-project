@@ -33,13 +33,13 @@ const SidebarItem = ({ item }) => {
         }}
       >
         <div
-          className={`${
+          className={` group ${
             isSidebarOpen
               ? "flex gap-x-2 items-center "
-              : "flex flex-col items-center gap-y-1  text-xs"
+              : "flex flex-col items-center gap-y-1 group-hover:text-black text-xs"
           }`}
         >
-          {item.icon("text-xl   text-gray-600")}
+          {item.icon("text-xl   text-gray-600 group-hover:text-black ")}
           {item.label}
         </div>
         <div>
@@ -55,13 +55,13 @@ const SidebarItem = ({ item }) => {
           {item.submenu && !isSidebarOpen && !isMobile && (
             <div
               className="absolute top-3 shadow-sm -right-42 submenue-sidebar-active p-1 rounded-lg w-40 
-              invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible "
+              invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible z-50"
             >
               {item.submenu.map((subItem) => (
                 <NavLink to={subItem.path}>
                   <li
                     key={subItem}
-                    className="p-1.5 cursor-pointer text-gray-500   text-[14px] rounded-md hover:bg-gray-100/60   z-10"
+                    className="p-1.5 cursor-pointer text-gray-500   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
                   >
                     {subItem.label}
                   </li>
