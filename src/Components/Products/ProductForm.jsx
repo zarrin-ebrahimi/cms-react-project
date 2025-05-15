@@ -2,9 +2,13 @@ import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMiniStop } from "react-icons/hi2";
 import Editore from "../TextEditore/Editore";
-export default function AddNewProduct() {
-  const [description, setDescription] = useState("");
-
+export default function ProductForm({initailValues, onSubmit, mode}) {
+  const [formData, setFormData] = useState(initailValues || {
+    name: '',
+    price: '', 
+    description: '', 
+    image: '',
+  })
   return (
     <div className=" mb-20 ">
       <h2 className="font-bold text-xl tracking-wide md:text-2xl mb-2">
