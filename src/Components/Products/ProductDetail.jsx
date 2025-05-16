@@ -27,7 +27,7 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-2 my-6 items-start gap-x-16  ">
         {/* Product Images*/}
         <div className="flex flex-col gap-y-4  ">
-          <div className=" w-full">
+          <div className="w-full">
             <img
               src="/images/Products/product-1.webp"
               alt=""

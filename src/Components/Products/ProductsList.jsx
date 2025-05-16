@@ -1,4 +1,4 @@
-import React from "react";
+import {useEffect, useState, useCallback} from "react";
 import { Link } from "react-router-dom";
 import { HiMiniStop } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
@@ -9,11 +9,28 @@ import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import Modal from "../Modal/Modal";
 import { useModal } from "../../Hooks/useModal";
+import { SlGameController } from "react-icons/sl";
 export default function ProductsList() {
   const { isOpen, openModal, closeModal } = useModal();
   const handleConfirm = () => {
     console.log("hello");
   };
+
+const [allProducts, setAllProducts] = useState([])
+
+
+  const getAllProducts = useCallback(()=>{
+    fetch('http://localhost:3000/api/products/')
+    .then(res => res.json())
+    .then(products => setAllProducts(products))
+    .catch(error => console.error('Error fetching products', error)
+    )
+  }, [])
+
+
+  useEffect(()=>{
+    getAllProducts()
+  }, [getAllProducts])
 
   return (
     <>
@@ -69,15 +86,17 @@ export default function ProductsList() {
                   </thead>
                   <tbody className="bg-white">
                     {/* Product Row */}
+                    {allProducts.map(product => (
+
                     <tr className="border-y  border-gray-200 hover:bg-gray-50">
                       <td className="flex items-center gap-3 px-6 py-4">
                         <img
-                          src="/watch-7.jpg"
+                          src={product.img}
                           alt="shoe"
                           className="w-16 h-14 rounded-xl"
                         />
                         <div>
-                          <p className="font-medium">Shoe</p>
+                          <p className="font-medium">{product.title}</p>
                           <p className="text-gray-400 text-xs">Shoes</p>
                         </div>
                       </td>
@@ -90,14 +109,14 @@ export default function ProductsList() {
                         <div className="w-32 h-2 bg-gray-200 rounded-full">
                           <div
                             className="h-full bg-green-500 rounded-full"
-                            style={{ width: "72%" }}
+                            style={{ width: `${product.count}%` }}
                           ></div>
                         </div>
                         <p className="text-xs mt-1 text-green-600">
-                          72 in stock
+                          {product.count} in stock
                         </p>
                       </td>
-                      <td className="px-6 py-4 font-medium">$97.14</td>
+                      <td className="px-6 py-4 font-medium">${product.price}</td>
                       <td className="px-6 py-4">
                         <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">
                           Published
@@ -127,6 +146,9 @@ export default function ProductsList() {
                         </div>
                       </td>
                     </tr>
+
+                    ))}
+
                   </tbody>
                 </table>
               </div>
@@ -136,13 +158,13 @@ export default function ProductsList() {
       </div>
 
       <Modal
-      isOpen={isOpen}
-      onClose={closeModal}
-      onConfirm={handleConfirm}
-      message={'Are you sure want to delete?'}
-      confirmTxt="Delete" 
-      cancelTxt="Cancel"
-      title={'Delete'}
+        isOpen={isOpen}
+        onClose={closeModal}
+        onConfirm={handleConfirm}
+        message={"Are you sure want to delete?"}
+        confirmTxt="Delete"
+        cancelTxt="Cancel"
+        title={"Delete"}
       />
     </>
   );

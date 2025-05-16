@@ -1,40 +1,33 @@
-import  { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { HiMiniStop } from "react-icons/hi2";
+import { useState, useEffect } from "react";
 import Editore from "../TextEditore/Editore";
-export default function ProductForm({product ={}, onSubmit, mode= ""}) {
-   const  [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [image, setImage] = useState("");
-    const [description, setDescription] = useState(""); 
 
-    useEffect(()=>{
-      if(product){
-        setName(product.name || "")
-        setPrice(product.price || "")
-        setImage(product.image || "")
-        setDescription(product.description || "")
-      }
-    }, [product])
+export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
 
-    const handleSubmit = (e) =>{
-          e.preventDefault()
-          onSubmit({name, price, image, description})
+  useEffect(() => {
+    if (product) {
+      setName(product.name || "");
+      setPrice(product.price || "");
+      setImage(product.image || "");
+      setDescription(product.description || "");
     }
+  }, [product]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ name, price, image, description });
+  };
 
   return (
     <div className=" mb-20 ">
-      <h2 className="font-bold text-xl tracking-wide md:text-2xl mb-2">
-        Create a new product
-      </h2>
-      <div className="flex items-center text-gray-600 gap-x-4 ">
-        <Link to={"/"}>Dashbord</Link>
-        <HiMiniStop size={6} />
-        <Link to={"/prodcut"}>Product</Link>
-      </div>
       <div className=" items-center flex flex-col  ">
-        <form onSubmit={handleSubmit}
-        className="   max-w-3xl flex  w-full flex-col  mt-4 ">
+        <form
+          onSubmit={handleSubmit}
+          className="   max-w-3xl flex  w-full flex-col  mt-4 "
+        >
           <div className=" shadow-lg rounded-2xl ">
             {/* Form Header */}
             <div className=" border-b-1 border-gray-200 gap-y-2 flex flex-col p-5">
@@ -47,8 +40,10 @@ export default function ProductForm({product ={}, onSubmit, mode= ""}) {
               {/* Product Name */}
               <div className="w-full  flex-col flex  relative">
                 <input
-                  required
+                  value={name}
+                  onChange={(e)=> setName(e.target.value)}
                   type="text"
+                  placeholder=" "
                   className="input-form p-4 border w-full rounded-md border-gray-200"
                 />
                 <label className="label-input-form px-px">Product Name</label>
@@ -57,13 +52,14 @@ export default function ProductForm({product ={}, onSubmit, mode= ""}) {
               {/*  Product  Description */}
               <div className="w-full  flex-col flex  relative">
                 <textarea
-                  required
+                  // value={description}
+                  // onChange={(e)=> setDescription(e.target.value)}
                   type="text"
+                  placeholder=" "
                   className="input-form p-4 border w-full resize-none h-36 rounded-md border-gray-200"
                 />
                 <label className="label-input-form px-px">
-                  {" "}
-                  Sun description
+                  Sub description
                 </label>
               </div>
 
@@ -78,7 +74,10 @@ export default function ProductForm({product ={}, onSubmit, mode= ""}) {
                   className="relative h-72 cursor-pointer
                bg-gray-100 border w-full mt-2 border-gray-200 rounded-md  "
                 >
-                  <input type="file" className=" hidden" />
+                  <input
+                   onChange={(e)=> setImage(e.target.files[0])}
+                   type="file" 
+                   className=" hidden" />
                   <div className="absolute items-center top-1/5 flex flex-col text-center  left-1/2 transform -translate-x-1/2">
                     <img src="/drop-img.png" alt="" className="w-23" />
                     <span className="font-bold">Drop or select file</span>
@@ -101,47 +100,29 @@ export default function ProductForm({product ={}, onSubmit, mode= ""}) {
               <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5  gap-3">
                 <div className="w-full  flex-col flex  relative">
                   <input
-                    required
+                  placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Name</label>
+                  <label className="label-input-form px-px">Color</label>
                 </div>
                 <div className="w-full  flex-col flex  relative">
                   <input
-                    required
                     type="text"
+                    placeholder=" "
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Name</label>
+                  <label className="label-input-form px-px">Product Code</label>
                 </div>
-                <div className="w-full  flex-col flex  relative">
-                  <input
-                    required
-                    type="text"
-                    className="input-form p-4 border w-full rounded-md border-gray-200"
-                  />
-                  <label className="label-input-form px-px">Product Name</label>
-                </div>
-                <div className="w-full  flex-col flex  relative">
-                  <input
-                    required
-                    type="text"
-                    className="input-form p-4 border w-full rounded-md border-gray-200"
-                  />
-                  <label className="label-input-form px-px">Product Name</label>
-                </div>
-
                 <div className="w-full md:col-span-2  col-span-1 flex-col flex  relative">
                   <input
-                    required
+                    placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
                   <label className="label-input-form px-px">Product Name</label>
                 </div>
               </div>
-
             </div>
           </div>
           <div className="p-4 flex justify-end w-full  mt-5">
@@ -150,7 +131,7 @@ export default function ProductForm({product ={}, onSubmit, mode= ""}) {
               className="p-2  rounded-md text-white  tracking-wide
              bg-gray-800 flex cursor-pointer w-32"
             >
-              {mode === 'update' ? "Update Product" : "Create Product"}
+              {mode === "update" ? "Update Product" : "Create Product"}
             </button>
           </div>
         </form>

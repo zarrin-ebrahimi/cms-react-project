@@ -54,11 +54,12 @@ background: linear-gradient(20deg, rgba(250, 235, 245, 1) 0%, rgba(255, 255, 255
     transition: 110ms cubic-bezier(0.4, 0 , 0.2, 1);
     
 }
-.input-form:is(:focus, :valid) ~ label{
-    transform: translateY(-120%) scale(0.9);
-    background-color: #ffff;
-    color:black;
-    padding: 0 5px 0 5px ;
+.input-form:focus ~ label,
+.input-form:not(:placeholder-shown) ~ label {
+  transform: translateY(-120%) scale(0.9);
+  background-color: #fff;
+  color: black;
+  padding: 0 5px;
 }
 
 .ck-editor__editable_inline{
