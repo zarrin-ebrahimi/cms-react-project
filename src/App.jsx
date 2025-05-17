@@ -30,7 +30,7 @@ export default function App() {
               <Route path="/orders" element={<Orders />} />
               <Route path="/product/add" element={<AddNewProduct />} />
               <Route path="/product/list"  element={<ProductsList/>}/>
-              <Route path="/product/detaile"  element={<ProductDetail/>}/>
+              <Route path="/product/:id"  element={<ProductDetail/>}/>
               <Route path="/product/edit"  element={<EditProduct/>}/>
             </Routes>
 

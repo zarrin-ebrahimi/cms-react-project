@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import { GoChevronLeft } from "react-icons/go";
 import { MdEdit } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
@@ -6,7 +7,39 @@ import { FaStar } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
+
 export default function ProductDetail() {
+  const { state } = useLocation();
+  const { id } = useParams();
+  const [product, setProduct] = useState(state?.product || null);
+  const [mainImg, setMainImg] = useState(null);
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    if (product) {
+      setMainImg(`/images/Products/product-${product.id}.webp`);
+    }
+
+    fetch("http://localhost:3000/api/products/")
+      .then((res) => res.json())
+      .then((data) => setAllProducts(data));
+  }, [product]);
+
+  useEffect(() => {
+    if (!state) {
+      fetch(`http://localhost:3000/api/products/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const selectedProductInfo = data.find((p) => p.id === parseInt(id));
+          setProduct(selectedProductInfo);
+        });
+    }
+  }, [state, id]);
+
+  if (!product) {
+    return <p>Product Not Found...</p>;
+  }
+
   return (
     <div className="md:max-w-5/6 m-auto  ">
       {/* Header Container */}
@@ -24,21 +57,27 @@ export default function ProductDetail() {
         </div>
       </div>
       {/* Product And Description */}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 my-6 items-start gap-x-16  ">
         {/* Product Images*/}
         <div className="flex flex-col gap-y-4  ">
           <div className="w-full">
             <img
-              src="/images/Products/product-1.webp"
+              src={mainImg}
               alt=""
               className="h-[400px] rounded-2xl  w-full"
             />
           </div>
           <div className="grid grid-cols-4 gap-2 justify-center px-10">
-            <img src="/watch-7.jpg" alt="" className="   rounded-xl" />
-            <img src="/watch-7.jpg" alt="" className="   rounded-xl" />
-            <img src="/watch-7.jpg" alt="" className="   rounded-xl" />
-            <img src="/watch-7.jpg" alt="" className="   rounded-xl" />
+            {allProducts.map((product) => (
+              <img
+                key={product.id}
+                src={`/images/Products/product-${product.id}.webp`}
+                alt="Product"
+                onClick={()=> setMainImg(`/images/Products/product-${product.id}.webp`)}
+                className="rounded-xl"
+              />
+            ))}
           </div>
         </div>
         {/* Description */}
@@ -49,21 +88,21 @@ export default function ProductDetail() {
           <span className="text-orange-600 text-sm font-bold">
             OUT OF STOCK
           </span>
-          <span className="font-bold text-xl">Urban Explorer Sneakers</span>
+          <span className="font-bold text-xl">{product.title}</span>
           {/* Stars */}
-          <div className="flex">
+          <div className="flex  items-center">
             <FaStar color="gold" />
             <FaStar color="gold" />
             <FaStar color="gold" />
             <FaStar color="gold" />
-            <span className="text-gray-400">(1.95k reviews)</span>
+            <span className="text-gray-400 ml-2">
+              ({product.popularity}k reviews)
+            </span>
           </div>
-          <span className="font-bold text-2xl  text-gray-900">$83.74</span>
-          <p className="text-gray-600">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae sit
-            dicta quo numquam. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Natus eveniet eum dolorum aperiam.
-          </p>
+          <span className="font-bold text-2xl  text-gray-900">
+            ${product.price}
+          </span>
+          <p className="text-gray-600">{product.productDesc}</p>
           <div className="border-gray-200 py-10  border-y my-8">
             <div className="grid grid-cols-2 gap-x-2 w-full  justify-stretch   ">
               <button className="bg-gray-300 flex items-center justify-center gap-x-3  px-10 py-3 rounded-md text-gray-500">
@@ -91,7 +130,6 @@ export default function ProductDetail() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

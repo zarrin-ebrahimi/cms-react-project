@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback} from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { HiMiniStop } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
@@ -12,25 +12,48 @@ import { useModal } from "../../Hooks/useModal";
 import { SlGameController } from "react-icons/sl";
 export default function ProductsList() {
   const { isOpen, openModal, closeModal } = useModal();
-  const handleConfirm = () => {
-    console.log("hello");
-  };
+  const [allProducts, setAllProducts] = useState([]);
+  const [productID, setProductID] = useState(null)
 
-const [allProducts, setAllProducts] = useState([])
-
-
-  const getAllProducts = useCallback(()=>{
-    fetch('http://localhost:3000/api/products/')
-    .then(res => res.json())
-    .then(products => setAllProducts(products))
-    .catch(error => console.error('Error fetching products', error)
-    )
-  }, [])
+  const handleDeleteClick = (id) => {
+        setProductID(id) 
+        openModal()
+        console.log(id);
+  }
 
 
-  useEffect(()=>{
-    getAllProducts()
-  }, [getAllProducts])
+
+  const getAllProducts = useCallback(async() => {
+   await fetch("http://localhost:3000/api/products/")
+      .then((res) => res.json())
+      .then((products) => setAllProducts(products))
+      .catch((error) => console.error("Error fetching products", error));
+  }, []);
+
+  useEffect(() => {
+    getAllProducts();
+   
+  }, [getAllProducts]);
+
+
+
+ const handleConfirmDeleteProduct = async () => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/products/${productID}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete");
+
+    console.log(res); // موفقیت حذف
+
+    await getAllProducts(); // برو لیست جدید رو بگیر و آپدیت کن
+
+    closeModal(); // بستن مدال بعد از حذف
+  } catch (err) {
+    console.error("Error deleting product:", err);
+  }
+};
 
   return (
     <>
@@ -71,7 +94,7 @@ const [allProducts, setAllProducts] = useState([])
               </div>
 
               {/* Product Table */}
-              <div className="max-h-[500px] overflow-y-auto ">
+              <div className="max-h-[600px] overflow-auto ">
                 <table className="min-w-full text-sm text-left text-gray-500">
                   {/* Table Head */}
                   <thead className="bg-gray-100  sticky top-0 z-10">
@@ -86,69 +109,70 @@ const [allProducts, setAllProducts] = useState([])
                   </thead>
                   <tbody className="bg-white">
                     {/* Product Row */}
-                    {allProducts.map(product => (
-
-                    <tr className="border-y  border-gray-200 hover:bg-gray-50">
-                      <td className="flex items-center gap-3 px-6 py-4">
-                        <img
-                          src={product.img}
-                          alt="shoe"
-                          className="w-16 h-14 rounded-xl"
-                        />
-                        <div>
-                          <p className="font-medium">{product.title}</p>
-                          <p className="text-gray-400 text-xs">Shoes</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        11 May 2025
-                        <br />
-                        <span className="text-xs text-gray-400">9:53 pm</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="w-32 h-2 bg-gray-200 rounded-full">
-                          <div
-                            className="h-full bg-green-500 rounded-full"
-                            style={{ width: `${product.count}%` }}
-                          ></div>
-                        </div>
-                        <p className="text-xs mt-1 text-green-600">
-                          {product.count} in stock
-                        </p>
-                      </td>
-                      <td className="px-6 py-4 font-medium">${product.price}</td>
-                      <td className="px-6 py-4">
-                        <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">
-                          Published
-                        </span>
-                      </td>
-                      <td className=" relative group ">
-                        <FiMoreVertical size={20} />
-                        <div
-                          className="absolute w-36  top-15 shadow-xl right-14 submenue-sidebar-active p-1.5 rounded-lg  flex flex-col gap-y-1
-                           invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible"
-                        >
-                          <Link className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
-                            <AiFillEdit size={20} />
-                            <span> Edite </span>
-                          </Link>
-                          <Link className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
-                            <IoMdEye size={20} />
-                            <span> View </span>
-                          </Link>
-                          <div
-                            onClick={openModal}
-                            className="p-1.5 flex items-center gap-x-4 cursor-pointer text-orange-500   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
-                          >
-                            <MdDelete size={20} />
-                            <span> Delete </span>
+                    {allProducts.map((product) => (
+                      <tr className="border-y  border-gray-200 hover:bg-gray-50">
+                        <td className="flex items-center gap-3 px-6 py-4">
+                          <img
+                            src={`/images/Products/product-${product.id}.webp`}
+                            alt="shoe"
+                            className="w-16 h-14 rounded-xl"
+                          />
+                          <div>
+                            <p className="font-medium">{product.title}</p>
+                            <p className="text-gray-400 text-xs">Shoes</p>
                           </div>
-                        </div>
-                      </td>
-                    </tr>
-
+                        </td>
+                        <td className="px-6 py-4">
+                          11 May 2025
+                          <br />
+                          <span className="text-xs text-gray-400">9:53 pm</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="w-32 h-2 bg-gray-200 rounded-full">
+                            <div
+                              className="h-full bg-green-500 rounded-full"
+                              style={{ width: `${product.count}%` }}
+                            ></div>
+                          </div>
+                          <p className="text-xs mt-1 text-green-600">
+                            {product.count} in stock
+                          </p>
+                        </td>
+                        <td className="px-6 py-4 font-medium">
+                          ${product.price}
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">
+                            Published
+                          </span>
+                        </td>
+                        <td className=" relative group ">
+                          <FiMoreVertical size={20} />
+                          {/* Hover */}
+                          <div
+                            className="absolute w-36  top-15 shadow-xl right-14 submenue-sidebar-active p-1.5 rounded-lg  flex flex-col gap-y-1 z-40
+                           invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible"
+                          >
+                            <Link className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
+                              <AiFillEdit size={20} />
+                              <span> Edite </span>
+                            </Link>
+                            <Link to={`/product/${product.id}`} state={{product}}
+                            className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
+                              <IoMdEye size={20} />
+                              <span> View </span>
+                            </Link>
+                            <div
+                              onClick={()=> handleDeleteClick(product.id)}
+                              className="p-1.5 flex items-center gap-x-4 cursor-pointer text-orange-500   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
+                            >
+                              <MdDelete size={20} />
+                              <span> Delete </span>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
                     ))}
-
                   </tbody>
                 </table>
               </div>
@@ -160,7 +184,7 @@ const [allProducts, setAllProducts] = useState([])
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
-        onConfirm={handleConfirm}
+        onConfirm={handleConfirmDeleteProduct}
         message={"Are you sure want to delete?"}
         confirmTxt="Delete"
         cancelTxt="Cancel"
