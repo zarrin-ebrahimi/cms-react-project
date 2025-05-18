@@ -7,7 +7,9 @@ import { FaStar } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
-
+import InnerImageZoom from 'react-inner-image-zoom';
+import 'react-inner-image-zoom/lib/styles.min.css';
+// import 'react-inner-image-zoom/style.css';
 export default function ProductDetail() {
   const { state } = useLocation();
   const { id } = useParams();
@@ -61,12 +63,18 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-2 my-6 items-start gap-x-16  ">
         {/* Product Images*/}
         <div className="flex flex-col gap-y-4  ">
-          <div className="w-full">
-            <img
-              src={mainImg}
-              alt=""
-              className="h-[400px] rounded-2xl  w-full"
-            />
+          <div className="w-[400px] h-[400px]">
+            <div className="w-[500px] h-[400px] mx-auto overflow-hidden relative">
+              <InnerImageZoom
+                src={mainImg}
+                zoomType="hover"
+                zoomScale={1.2}
+                hideHint={true}
+                zoomPreload={true}
+                fullscreenOnMobile={true}
+                moveType="pan"
+              />
+            </div>
           </div>
           <div className="grid grid-cols-4 gap-2 justify-center px-10">
             {allProducts.map((product) => (
@@ -74,7 +82,9 @@ export default function ProductDetail() {
                 key={product.id}
                 src={`/images/Products/product-${product.id}.webp`}
                 alt="Product"
-                onClick={()=> setMainImg(`/images/Products/product-${product.id}.webp`)}
+                onClick={() =>
+                  setMainImg(`/images/Products/product-${product.id}.webp`)
+                }
                 className="rounded-xl"
               />
             ))}
