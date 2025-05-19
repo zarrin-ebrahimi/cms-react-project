@@ -118,7 +118,7 @@ export default function ProductsList() {
                             className="w-16 h-14 rounded-xl"
                           />
                           <div>
-                            <p className="font-medium">{product.title}</p>
+                            <p  className="font-medium">{product.title}</p>
                             <p className="text-gray-400 text-xs">Shoes</p>
                           </div>
                         </td>

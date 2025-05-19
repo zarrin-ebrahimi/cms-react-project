@@ -7,8 +7,8 @@ import { FaStar } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
-import InnerImageZoom from 'react-inner-image-zoom';
-import 'react-inner-image-zoom/lib/styles.min.css';
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/styles.min.css";
 // import 'react-inner-image-zoom/style.css';
 export default function ProductDetail() {
   const { state } = useLocation();
@@ -59,39 +59,51 @@ export default function ProductDetail() {
         </div>
       </div>
       {/* Product And Description */}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 my-6 items-start gap-x-16  ">
+      <div className=" grid grid-cols-1 xl:grid-cols-2  my-5 items-start gap-x-16   px-4 ">
         {/* Product Images*/}
-        <div className="flex flex-col gap-y-4  ">
-          <div className="w-[400px] h-[400px]">
-            <div className="w-[500px] h-[400px] mx-auto overflow-hidden relative">
-              <InnerImageZoom
-                src={mainImg}
-                zoomType="hover"
-                zoomScale={1.2}
-                hideHint={true}
-                zoomPreload={true}
-                fullscreenOnMobile={true}
-                moveType="pan"
-              />
-            </div>
+        <div className="flex flex-col gap-y-3 md:gap-y-4  w-full ">
+          <div className=" h-[400px] md:h-[450px]  w-full mx-auto rounded-2xl overflow-hidden relative">
+            <InnerImageZoom
+              src={mainImg}
+              zoomType="hover"
+              zoomScale={1.3}
+              hideHint={true}
+              zoomPreload={true}
+              fullscreenOnMobile={true}
+              moveType="pan"
+              // className="w-full h-full object-cover"
+            />
           </div>
-          <div className="grid grid-cols-4 gap-2 justify-center px-10">
-            {allProducts.map((product) => (
-              <img
-                key={product.id}
-                src={`/images/Products/product-${product.id}.webp`}
-                alt="Product"
-                onClick={() =>
-                  setMainImg(`/images/Products/product-${product.id}.webp`)
-                }
-                className="rounded-xl"
-              />
-            ))}
-          </div>
+
+<div className="grid grid-cols-4 gap-2 justify-center px-10">
+  {allProducts.map((product) => {
+    const imgSrc = `/images/Products/product-${product.id}.webp`
+    const isSelected = mainImg === imgSrc;
+
+    return (
+      <div
+        key={product.id}
+        className="relative cursor-pointer"
+        onClick={() => setMainImg(imgSrc)}
+      >
+        <img
+          src={imgSrc}
+          alt="Product"
+          className={`rounded-xl border-2 transition-all duration-300 ${
+            isSelected ? 'border-green-700' : 'border-transparent'
+          }`}
+        />
+
+        {!isSelected && (
+          <div className="absolute bg-white/50 inset-0 w-full h-full z-10 rounded-xl"></div>
+        )}
+      </div>
+    );
+  })}
+</div>
         </div>
         {/* Description */}
-        <div className=" flex flex-col gap-y-4 mt-5">
+        <div className=" flex flex-col gap-y-4 mt-5  w-full">
           <span className=" bg-blue-400/40 w-10 text-blue-950 text-sm text-center rounded p-px">
             NEW
           </span>
@@ -114,8 +126,8 @@ export default function ProductDetail() {
           </span>
           <p className="text-gray-600">{product.productDesc}</p>
           <div className="border-gray-200 py-10  border-y my-8">
-            <div className="grid grid-cols-2 gap-x-2 w-full  justify-stretch   ">
-              <button className="bg-gray-300 flex items-center justify-center gap-x-3  px-10 py-3 rounded-md text-gray-500">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 gap-x-2 w-full  justify-stretch   ">
+              <button className="bg-gray-300  flex   items-center justify-center gap-x-3  px-10 py-3 rounded-md text-gray-500">
                 <FaCartPlus />
                 Add to cart
               </button>
