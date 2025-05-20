@@ -75,32 +75,32 @@ export default function ProductDetail() {
             />
           </div>
 
-<div className="grid grid-cols-4 gap-2 justify-center px-10">
-  {allProducts.map((product) => {
-    const imgSrc = `/images/Products/product-${product.id}.webp`
-    const isSelected = mainImg === imgSrc;
+          <div className="grid grid-cols-4 gap-2 justify-center px-10">
+            {allProducts.map((product) => {
+              const imgSrc = `/images/Products/product-${product.id}.webp`;
+              const isSelected = mainImg === imgSrc;
 
-    return (
-      <div
-        key={product.id}
-        className="relative cursor-pointer"
-        onClick={() => setMainImg(imgSrc)}
-      >
-        <img
-          src={imgSrc}
-          alt="Product"
-          className={`rounded-xl border-2 transition-all duration-300 ${
-            isSelected ? 'border-green-700' : 'border-transparent'
-          }`}
-        />
+              return (
+                <div
+                  key={product.id}
+                  className="relative cursor-pointer"
+                  onClick={() => setMainImg(imgSrc)}
+                >
+                  <img
+                    src={imgSrc}
+                    alt="Product"
+                    className={`rounded-xl border-2 transition-all duration-300 ${
+                      isSelected ? "border-green-700" : "border-transparent"
+                    }`}
+                  />
 
-        {!isSelected && (
-          <div className="absolute bg-white/50 inset-0 w-full h-full z-10 rounded-xl"></div>
-        )}
-      </div>
-    );
-  })}
-</div>
+                  {!isSelected && (
+                    <div className="absolute bg-white/50 inset-0 w-full h-full z-10 rounded-xl"></div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
         {/* Description */}
         <div className=" flex flex-col gap-y-4 mt-5  w-full">

@@ -2,17 +2,21 @@ import { useState, useEffect } from "react";
 import Editore from "../TextEditore/Editore";
 
 export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
+  const [colors, setColors] = useState("");
+  const [count, setCount] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    if (product) {
-      setName(product.name || "");
-      setPrice(product.price || "");
-      setImage(product.image || "");
-      setDescription(product.description || "");
+    if (product.title) {
+      setTitle(product.title || '');
+      setPrice(product.price || '');
+      setCount(product.count || '');
+      setImage(product.image || '');
+      setColors(product.colors || '');
+      setDescription(product.productDesc || '');
     }
   }, [product]);
 
@@ -40,8 +44,8 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               {/* Product Name */}
               <div className="w-full  flex-col flex  relative">
                 <input
-                  value={name}
-                  onChange={(e)=> setName(e.target.value)}
+                  value={title}
+                  onChange={(e)=> setTitle(e.target.value)}
                   type="text"
                   placeholder=" "
                   className="input-form p-4 border w-full rounded-md border-gray-200"
@@ -100,6 +104,8 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5  gap-3">
                 <div className="w-full  flex-col flex  relative">
                   <input
+                  value={colors}
+                  onChange={(e)=> setColors(e.target.value)}
                   placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
@@ -110,17 +116,21 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
                   <input
                     type="text"
                     placeholder=" "
+                    value={count}
+                    onChange={(e)=> setCount(e.target.value)}
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Code</label>
+                  <label className="label-input-form px-px">Product Count</label>
                 </div>
                 <div className="w-full md:col-span-2  col-span-1 flex-col flex  relative">
                   <input
+                    value={price}
+                    onChange={(e)=> setPrice(e.target.value)}
                     placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Name</label>
+                  <label className="label-input-form px-px">Product Price</label>
                 </div>
               </div>
             </div>
@@ -128,8 +138,8 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
           <div className="p-4 flex justify-end w-full  mt-5">
             <button
               type="submit"
-              className="p-2  rounded-md text-white  tracking-wide
-             bg-gray-800 flex cursor-pointer w-32"
+              className="p-2  rounded-md text-white text-center   tracking-wide
+             bg-gray-800 flex cursor-pointer w-36"
             >
               {mode === "update" ? "Update Product" : "Create Product"}
             </button>

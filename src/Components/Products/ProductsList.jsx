@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { useProduct } from "../../Contexts/ProductContext";
 import { HiMiniStop } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa6";
@@ -9,51 +10,22 @@ import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import Modal from "../Modal/Modal";
 import { useModal } from "../../Hooks/useModal";
-import { SlGameController } from "react-icons/sl";
+
 export default function ProductsList() {
   const { isOpen, openModal, closeModal } = useModal();
-  const [allProducts, setAllProducts] = useState([]);
-  const [productID, setProductID] = useState(null)
+  const [prodcutID, setProductID ] = useState(null)
+  const {allProducts, deleteProduct} = useProduct()
 
   const handleDeleteClick = (id) => {
-        setProductID(id) 
-        openModal()
-        console.log(id);
+    setProductID(id)
+    openModal();
+    console.log(id);
+  };
+
+  const handleConfirmDeleteProduct = async () =>{
+    await deleteProduct(prodcutID)
+    closeModal()
   }
-
-
-
-  const getAllProducts = useCallback(async() => {
-   await fetch("http://localhost:3000/api/products/")
-      .then((res) => res.json())
-      .then((products) => setAllProducts(products))
-      .catch((error) => console.error("Error fetching products", error));
-  }, []);
-
-  useEffect(() => {
-    getAllProducts();
-   
-  }, [getAllProducts]);
-
-
-
- const handleConfirmDeleteProduct = async () => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/products/${productID}`, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) throw new Error("Failed to delete");
-
-    console.log(res); // موفقیت حذف
-
-    await getAllProducts(); // برو لیست جدید رو بگیر و آپدیت کن
-
-    closeModal(); // بستن مدال بعد از حذف
-  } catch (err) {
-    console.error("Error deleting product:", err);
-  }
-};
 
   return (
     <>
@@ -118,7 +90,7 @@ export default function ProductsList() {
                             className="w-16 h-14 rounded-xl"
                           />
                           <div>
-                            <p  className="font-medium">{product.title}</p>
+                            <p className="font-medium">{product.title}</p>
                             <p className="text-gray-400 text-xs">Shoes</p>
                           </div>
                         </td>
@@ -153,17 +125,23 @@ export default function ProductsList() {
                             className="absolute w-36  top-15 shadow-xl right-14 submenue-sidebar-active p-1.5 rounded-lg  flex flex-col gap-y-1 z-40
                            invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible"
                           >
-                            <Link className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
+                            <Link
+                              to={`/product/edit/${product.id}`}
+                              className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
+                            >
                               <AiFillEdit size={20} />
                               <span> Edite </span>
                             </Link>
-                            <Link to={`/product/${product.id}`} state={{product}}
-                            className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10">
+                            <Link
+                              to={`/product/${product.id}`}
+                              state={{ product }}
+                              className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
+                            >
                               <IoMdEye size={20} />
                               <span> View </span>
                             </Link>
                             <div
-                              onClick={()=> handleDeleteClick(product.id)}
+                              onClick={() => handleDeleteClick(product.id)}
                               className="p-1.5 flex items-center gap-x-4 cursor-pointer text-orange-500   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
                             >
                               <MdDelete size={20} />

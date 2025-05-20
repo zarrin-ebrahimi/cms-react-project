@@ -14,29 +14,31 @@ import AddNewProduct from "./Components/Products/AddNewProduct";
 import ProductsList from "./Components/Products/ProductsList";
 import ProductDetail from "./Components/Products/ProductDetail";
 import EditProduct from "./Components/Products/EditProduct";
+import { ProductProvider } from "./Contexts/ProductContext";
 export default function App() {
   return (
     <SidebarProvider>
-      <div className="flex h-screen  overflow-hidden">
-        <Sidebar menuItems={menuItems} />
-        <div className="flex-1 flex-grow  overflow-y-auto">
-          <Topbar />
-          <div className="content flex-grow bg-white px-5 md:px-8 ">
-            <Routes>
-              <Route path="/product" element={<Products />} />
-              <Route path="/comments" element={<Comments />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/offs" element={<Offs />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/product/add" element={<AddNewProduct />} />
-              <Route path="/product/list"  element={<ProductsList/>}/>
-              <Route path="/product/:id"  element={<ProductDetail/>}/>
-              <Route path="/product/edit"  element={<EditProduct/>}/>
-            </Routes>
-
+      <ProductProvider>
+        <div className="flex h-screen  overflow-hidden">
+          <Sidebar menuItems={menuItems} />
+          <div className="flex-1 flex-grow  overflow-y-auto">
+            <Topbar />
+            <div className="content flex-grow bg-white px-5 md:px-8 ">
+              <Routes>
+                <Route path="/product" element={<Products />} />
+                <Route path="/comments" element={<Comments />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/offs" element={<Offs />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/product/add" element={<AddNewProduct />} />
+                <Route path="/product/list" element={<ProductsList />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/product/edit/:id" element={<EditProduct />} />
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
+      </ProductProvider>
     </SidebarProvider>
   );
 }

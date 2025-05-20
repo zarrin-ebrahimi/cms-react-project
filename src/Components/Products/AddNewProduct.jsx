@@ -4,6 +4,10 @@ import { HiMiniStop } from "react-icons/hi2";
 import ProductForm from "./ProductForm";
 export default function AddNewProduct() {
 
+
+  const addProductHandler = () =>{
+    console.log('hello');
+  }
   return (
     <div className=" mb-20 ">
       <h2 className="font-bold text-xl tracking-wide md:text-2xl mb-2">
@@ -14,7 +18,11 @@ export default function AddNewProduct() {
         <HiMiniStop size={6} />
         <Link to={"/prodcut"}>Product</Link>
       </div>
-        <ProductForm/>
+        <ProductForm 
+           onSubmit={addProductHandler}
+           mode="update"
+           
+        />
     </div>
   );
 }
