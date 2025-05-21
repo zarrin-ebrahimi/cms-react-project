@@ -25,7 +25,7 @@ export const ProductProvider = ({ children }) => {
         }
       );
       if (res.ok){
-       setAllProducts((prev)=>prev.filter(product => product.id !== IdleDeadline))
+       setAllProducts((prev)=>prev.filter(product => product.id !== id))
       } else {
         console.error("Error deleting product:", res.statusText);
       }
@@ -49,3 +49,5 @@ export const ProductProvider = ({ children }) => {
 };
 
 export const useProduct = () => useContext(ProductContext);
+
+

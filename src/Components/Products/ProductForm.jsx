@@ -11,12 +11,12 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
 
   useEffect(() => {
     if (product.title) {
-      setTitle(product.title || '');
-      setPrice(product.price || '');
-      setCount(product.count || '');
-      setImage(product.image || '');
-      setColors(product.colors || '');
-      setDescription(product.productDesc || '');
+      setTitle(product.title || "");
+      setPrice(product.price || "");
+      setCount(product.count || "");
+      setImage(product.image || "");
+      setColors(product.colors || "");
+      setDescription(product.productDesc || "");
     }
   }, [product]);
 
@@ -45,7 +45,7 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               <div className="w-full  flex-col flex  relative">
                 <input
                   value={title}
-                  onChange={(e)=> setTitle(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                   type="text"
                   placeholder=" "
                   className="input-form p-4 border w-full rounded-md border-gray-200"
@@ -75,20 +75,39 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               <div className="flex flex-col">
                 <span>Images</span>
                 <label
-                  className="relative h-72 cursor-pointer
+                  className="relative h-[450px] cursor-pointer
                bg-gray-100 border w-full mt-2 border-gray-200 rounded-md  "
                 >
                   <input
-                   onChange={(e)=> setImage(e.target.files[0])}
-                   type="file" 
-                   className=" hidden" />
-                  <div className="absolute items-center top-1/5 flex flex-col text-center  left-1/2 transform -translate-x-1/2">
-                    <img src="/drop-img.png" alt="" className="w-23" />
-                    <span className="font-bold">Drop or select file</span>
-                    <span className="text-gray-600">
-                      Drop files here or click to browser through your machine
-                    </span>
-                  </div>
+                    onChange={(e) => setImage(e.target.files[0])}
+                    type="file"
+                    className=" hidden"
+                  />
+                  {
+                    (mode =
+                      "update" && product.id ? (
+                        <div className="absolute inset-0 overflow-hidden">
+                          <img
+                            src={`/images/Products/product-${product.id}.webp`}
+                            alt=""
+                            className="h-full w-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="absolute items-center top-1/5   left-1/2 transform -translate-x-1/2">
+                          <div className="flex flex-col text-center items-center">
+                            <img src="/drop-img.png" alt="" className="w-23" />
+                            <span className="font-bold">
+                              Drop or select file
+                            </span>
+                            <span className="text-gray-600">
+                              Drop files here or click to browser through your
+                              machine
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                  }
                 </label>
               </div>
             </div>
@@ -104,9 +123,9 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5  gap-3">
                 <div className="w-full  flex-col flex  relative">
                   <input
-                  value={colors}
-                  onChange={(e)=> setColors(e.target.value)}
-                  placeholder=" "
+                    value={colors}
+                    onChange={(e) => setColors(e.target.value)}
+                    placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
@@ -117,20 +136,24 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
                     type="text"
                     placeholder=" "
                     value={count}
-                    onChange={(e)=> setCount(e.target.value)}
+                    onChange={(e) => setCount(e.target.value)}
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Count</label>
+                  <label className="label-input-form px-px">
+                    Product Count
+                  </label>
                 </div>
                 <div className="w-full md:col-span-2  col-span-1 flex-col flex  relative">
                   <input
                     value={price}
-                    onChange={(e)=> setPrice(e.target.value)}
+                    onChange={(e) => setPrice(e.target.value)}
                     placeholder=" "
                     type="text"
                     className="input-form p-4 border w-full rounded-md border-gray-200"
                   />
-                  <label className="label-input-form px-px">Product Price</label>
+                  <label className="label-input-form px-px">
+                    Product Price
+                  </label>
                 </div>
               </div>
             </div>
@@ -141,7 +164,7 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               className="p-2  rounded-md text-white text-center   tracking-wide
              bg-gray-800 flex cursor-pointer w-36"
             >
-              {mode === "update" ? "Update Product" : "Create Product"}
+              {mode === "update" ? "Update Product" : " Create Product"}
             </button>
           </div>
         </form>

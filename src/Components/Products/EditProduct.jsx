@@ -12,7 +12,7 @@ export default function EditProduct() {
   if(!mainProduct) return <p>Product not found</p>
 
 useEffect(()=>{
-  console.log('Heelo000000000000000000000000000000000000 Product', mainProduct);
+  console.log('Product', mainProduct);
 })
   
   return (
@@ -23,7 +23,7 @@ useEffect(()=>{
       <div className="flex items-center text-gray-600 gap-x-4 ">
         <Link to={"/"}>Dashbord</Link>
         <HiMiniStop size={6} />
-        <Link to={"/prodcut"}>Product</Link>
+        <Link to={"/prodcut/list"}>Product</Link>
       </div>
         <ProductForm 
         mode='update' 
