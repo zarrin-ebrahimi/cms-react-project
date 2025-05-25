@@ -4,9 +4,11 @@ import Editore from "../TextEditore/Editore";
 export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [img, setImg] = useState("");
   const [colors, setColors] = useState("");
   const [count, setCount] = useState("");
+  const [sale, setSale] = useState("");
+  const [popularity, setPopularity] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
@@ -14,15 +16,26 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
       setTitle(product.title || "");
       setPrice(product.price || "");
       setCount(product.count || "");
-      setImage(product.image || "");
+      setImg(product.img || "");
       setColors(product.colors || "");
+      setSale(product.sale || "");
+      setPopularity(product.popularity || "");
       setDescription(product.productDesc || "");
     }
   }, [product]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, price, image, description });
+    onSubmit({
+      title,
+      colors:  Number(colors),
+      count : Number(count),
+      price: Number(price),
+      img,
+      description : description || '' ,
+      sale : Number(sale),
+      popularity: Number(popularity),
+    });
   };
 
   return (
@@ -54,7 +67,7 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               </div>
 
               {/*  Product  Description */}
-              <div className="w-full  flex-col flex  relative">
+              {/* <div className="w-full  flex-col flex  relative">
                 <textarea
                   // value={description}
                   // onChange={(e)=> setDescription(e.target.value)}
@@ -65,7 +78,7 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
                 <label className="label-input-form px-px">
                   Sub description
                 </label>
-              </div>
+              </div> */}
 
               <div className="w-full max-w-full ">
                 <Editore value={description} onChange={setDescription} />
@@ -79,35 +92,30 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
                bg-gray-100 border w-full mt-2 border-gray-200 rounded-md  "
                 >
                   <input
-                    onChange={(e) => setImage(e.target.files[0])}
+                    // onChange={(e) => setImage(e.target.files[0])}
                     type="file"
                     className=" hidden"
                   />
-                  {
-                    (mode =
-                      "update" && product.id ? (
-                        <div className="absolute inset-0 overflow-hidden">
-                          <img
-                            src={`/images/Products/product-${product.id}.webp`}
-                            alt=""
-                            className="h-full w-full"
-                          />
-                        </div>
-                      ) : (
-                        <div className="absolute items-center top-1/5   left-1/2 transform -translate-x-1/2">
-                          <div className="flex flex-col text-center items-center">
-                            <img src="/drop-img.png" alt="" className="w-23" />
-                            <span className="font-bold">
-                              Drop or select file
-                            </span>
-                            <span className="text-gray-600">
-                              Drop files here or click to browser through your
-                              machine
-                            </span>
-                          </div>
-                        </div>
-                      ))
-                  }
+                  {mode === "update" && product.id ? (
+                    <div className="absolute inset-0 overflow-hidden">
+                      <img
+                        src={`/images/Products/product-${product.id}.webp`}
+                        alt=""
+                        className="h-full w-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="absolute items-center top-1/5   left-1/2 transform -translate-x-1/2">
+                      <div className="flex flex-col text-center items-center">
+                        <img src="/drop-img.png" alt="" className="w-23" />
+                        <span className="font-bold">Drop or select file</span>
+                        <span className="text-gray-600">
+                          Drop files here or click to browser through your
+                          machine
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </label>
               </div>
             </div>
@@ -155,14 +163,53 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
                     Product Price
                   </label>
                 </div>
+                {/* Product Image Name */}
+                <div className="w-full  flex-col flex  relative">
+                  <input
+                    value={img}
+                    onChange={(e) => setImg(e.target.value)}
+                    type="text"
+                    placeholder=" "
+                    className="input-form p-4 border w-full rounded-md border-gray-200"
+                  />
+                  <label className="label-input-form px-px">
+                    Product Image Name
+                  </label>
+                </div>
+                {/* Product Image Name */}
+                <div className="w-full  flex-col flex  relative">
+                  <input
+                    value={popularity}
+                    onChange={(e) => setPopularity(e.target.value)}
+                    type="text"
+                    placeholder=" "
+                    className="input-form p-4 border w-full rounded-md border-gray-200"
+                  />
+                  <label className="label-input-form px-px">
+                    Product Popularity
+                  </label>
+                </div>
+                {/* Product Sale */}
+                <div className="w-full  flex-col flex  relative">
+                  <input
+                    value={sale}
+                    onChange={(e) => setSale(e.target.value)}
+                    type="text"
+                    placeholder=" "
+                    className="input-form p-4 border w-full rounded-md border-gray-200"
+                  />
+                  <label className="label-input-form px-px">
+                    Product Sale
+                  </label>
+                </div>
               </div>
             </div>
           </div>
           <div className="p-4 flex justify-end w-full  mt-5">
             <button
               type="submit"
-              className="p-2  rounded-md text-white text-center   tracking-wide
-             bg-gray-800 flex cursor-pointer w-36"
+              className="p-2  rounded-md text-white  text-center   tracking-wide
+             bg-gray-800 flex justify-center cursor-pointer w-36"
             >
               {mode === "update" ? "Update Product" : " Create Product"}
             </button>
