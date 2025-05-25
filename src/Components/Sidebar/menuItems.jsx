@@ -32,8 +32,8 @@ export const menuItems = [
     icon:(className) => <PiUserSwitchDuotone className={className}/> ,
     submenu: [
       { id: "add", label: "Add", path: "/user/add" },
-      { id: "edite", label: "Edite", path: "/user/add" },
-      { id: "list", label: "List", path: "/user/add" },
+      { id: "edite", label: "Edite", path: "/user/edit" },
+      { id: "list", label: "List", path: "/users" },
     ],
   },
   {

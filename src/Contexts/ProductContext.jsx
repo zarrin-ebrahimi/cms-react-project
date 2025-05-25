@@ -6,7 +6,7 @@ export const ProductProvider = ({ children }) => {
   const [allProducts, setAllProducts] = useState([]);
   const getAllProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/products/");
+      const res = await fetch("http://localhost:8000/api/products/");
       const products = await res.json();
       console.log(res);
       setAllProducts(products);
@@ -19,7 +19,7 @@ export const ProductProvider = ({ children }) => {
   const deleteProduct = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/products/${id}`,
+        `http://localhost:8000/api/products/${id}`,
         {
           method: "DELETE",
         }
