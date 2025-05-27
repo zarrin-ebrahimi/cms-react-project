@@ -7,24 +7,28 @@ import { FaStar } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
-import InnerImageZoom from "react-inner-image-zoom";
-import "react-inner-image-zoom/lib/styles.min.css";
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
+import { useProduct } from "../../Contexts/ProductContext";
 // import 'react-inner-image-zoom/style.css';
 export default function ProductDetail() {
   const { state } = useLocation();
   const { id } = useParams();
   const [product, setProduct] = useState(state?.product || null);
   const [mainImg, setMainImg] = useState(null);
-  const [allProducts, setAllProducts] = useState([]);
+  const { allProducts } = useProduct();
+  const albumProductImg = [
+    product.img,
+    ...allProducts.filter((p) => p.id !== product.id)
+    .slice(0, 3)
+    .map((p) => p.img),
+  ];
 
   useEffect(() => {
     if (product) {
-      setMainImg(`/images/Products/product-${product.id}.webp`);
+      setMainImg(product.img);
     }
-
-    fetch("http://localhost:3000/api/products/")
-      .then((res) => res.json())
-      .then((data) => setAllProducts(data));
   }, [product]);
 
   useEffect(() => {
@@ -62,32 +66,26 @@ export default function ProductDetail() {
       <div className=" grid grid-cols-1 xl:grid-cols-2  my-5 items-start gap-x-16   px-4 ">
         {/* Product Images*/}
         <div className="flex flex-col gap-y-3 md:gap-y-4  w-full ">
-          <div className=" h-[400px] md:h-[450px]  w-full mx-auto rounded-2xl overflow-hidden relative">
-            <InnerImageZoom
-              src={mainImg}
-              zoomType="hover"
-              zoomScale={1.3}
-              hideHint={true}
-              zoomPreload={true}
-              fullscreenOnMobile={true}
-              moveType="pan"
-              // className="w-full h-full object-cover"
+          <div className="  h-[340px] md:h-[450px]  w-full mx-auto rounded-2xl overflow-hidden ">
+            <Zoom>
+            <img 
+              src={`/images/Products/${mainImg}`}
+              className="max-w-full max-h-full w-full object-contain  rounded-2xl"
             />
+            </Zoom>
           </div>
 
           <div className="grid grid-cols-4 gap-2 justify-center px-10">
-            {allProducts.map((product) => {
-              const imgSrc = `/images/Products/product-${product.id}.webp`;
-              const isSelected = mainImg === imgSrc;
-
+            {albumProductImg.map((img) => {
+              const isSelected = mainImg === img;
               return (
                 <div
-                  key={product.id}
+                  // key={product.id}
                   className="relative cursor-pointer"
-                  onClick={() => setMainImg(imgSrc)}
+                  onClick={() => setMainImg(img)}
                 >
                   <img
-                    src={imgSrc}
+                    src={`/images/Products/${img}`}
                     alt="Product"
                     className={`rounded-xl border-2 transition-all duration-300 ${
                       isSelected ? "border-green-700" : "border-transparent"

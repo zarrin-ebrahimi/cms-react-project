@@ -28,13 +28,13 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
     e.preventDefault();
     onSubmit({
       title,
-      colors:  Number(colors),
-      count : Number(count),
-      price: Number(price),
+      colors,
+      count,
+      price,
       img,
-      description : description || '' ,
-      sale : Number(sale),
-      popularity: Number(popularity),
+      productDesc : description || '' ,
+      sale,
+      popularity,
     });
   };
 
@@ -67,18 +67,6 @@ export default function ProductForm({ product = {}, onSubmit, mode = "" }) {
               </div>
 
               {/*  Product  Description */}
-              {/* <div className="w-full  flex-col flex  relative">
-                <textarea
-                  // value={description}
-                  // onChange={(e)=> setDescription(e.target.value)}
-                  type="text"
-                  placeholder=" "
-                  className="input-form p-4 border w-full resize-none h-36 rounded-md border-gray-200"
-                />
-                <label className="label-input-form px-px">
-                  Sub description
-                </label>
-              </div> */}
 
               <div className="w-full max-w-full ">
                 <Editore value={description} onChange={setDescription} />

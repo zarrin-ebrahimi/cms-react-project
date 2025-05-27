@@ -85,7 +85,9 @@ export default function ProductsList() {
                       <tr className="border-y  border-gray-200 hover:bg-gray-50">
                         <td className="flex items-center gap-3 px-6 py-4">
                           <img
-                            src={`/images/Products/product-${product.id}.webp`}
+                            // src={`/images/Products/product-${product.id}.webp`} 
+                            src={`/images/Products/${product.img}`}
+
                             alt="shoe"
                             className="w-16 h-14 rounded-xl"
                           />
@@ -100,9 +102,9 @@ export default function ProductsList() {
                           <span className="text-xs text-gray-400">9:53 pm</span>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="w-32 h-2 bg-gray-200 rounded-full">
+                          <div className="w-32 h-2 bg-gray-200 rounded-full ">
                             <div
-                              className="h-full bg-green-500 rounded-full"
+                              className="h-full bg-green-500 rounded-full max-w-full"
                               style={{ width: `${product.count}%` }}
                             ></div>
                           </div>
