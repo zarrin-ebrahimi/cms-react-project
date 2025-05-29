@@ -12,33 +12,35 @@ import { useModal } from "../../Hooks/useModal";
 export default function Users() {
   const [allUsers, setAllUsers] = useState([]);
   const { isOpen, openModal, closeModal } = useModal();
+  const [userID, setUserID] = useState(null);
 
-  // const getAndShowUsers = async () => {
-  //      try{
-  //       const res = await fetch('http://localhost:8000/api/users')
-  //       const users = res.json()
-  //       console.log(users)
-  //       setAllUsers(users)
+  const handleDeleteClick = (id) => {
+    openModal();
+    setUserID(id);
+    console.log(id);
+  };
 
-  //      } catch(error) {
-  //       console.error('Error Fetching Users', error)
-  //      }
-  // }
+  const handleConfirmDeleteUser = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/users/${userID}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setAllUsers((prev) => prev.filter((user) => user.id !== user.id));
+      } else {
+        console.error("Error deleting user: ", res.statusText);
+      }
+    } catch (err) {
+      console.error("Error deleting user", err);
+    }
 
-  const handleDeleteClick = (id) =>{
-       openModal() 
-
-  }
-
-  const handleConfirmDeleteUser = () =>{
-    console.log("hello");
-  }
+    closeModal();
+  };
   useEffect(() => {
     fetch(`http://localhost:8000/api/users`)
       .then((res) => res.json())
       .then((users) => setAllUsers(users));
   }, []);
-
 
   return (
     <>
