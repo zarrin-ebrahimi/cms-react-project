@@ -26,7 +26,7 @@ export default function Users() {
         method: "DELETE",
       });
       if (res.ok) {
-        setAllUsers((prev) => prev.filter((user) => user.id !== user.id));
+        setAllUsers((prev) => prev.filter((user) => user.id !== userID));
       } else {
         console.error("Error deleting user: ", res.statusText);
       }
