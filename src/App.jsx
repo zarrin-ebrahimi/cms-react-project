@@ -14,7 +14,9 @@ import AddNewProduct from "./Components/Products/AddNewProduct";
 import ProductsList from "./Components/Products/ProductsList";
 import ProductDetail from "./Components/Products/ProductDetail";
 import EditProduct from "./Components/Products/EditProduct";
+import Home from "./Pages/Home/Home";
 import { ProductProvider } from "./Contexts/ProductContext";
+
 export default function App() {
   return (
     <SidebarProvider>
@@ -25,6 +27,7 @@ export default function App() {
             <Topbar />
             <div className="content flex-grow bg-white px-5 md:px-8 ">
               <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/product" element={<Products />} />
                 <Route path="/comments" element={<Comments />} />
                 <Route path="/users" element={<Users />} />

@@ -75,11 +75,9 @@ background: linear-gradient(20deg, rgba(250, 235, 245, 1) 0%, rgba(255, 255, 255
   }
 
 
-
-
-.overlay{
-    @apply md:hidden  invisible opacity-0 bg-black/40 fixed inset-0 h-full w-full z-10 transition-all ;
-}
-.overlay--visible{
-    @apply  visible opacity-100 ; 
+.card-info-bg{
+    background-image: linear-gradient(rgba(0,0, 0, 0.9)), url('../public/images/fruit.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
