@@ -1,16 +1,19 @@
 import React from "react";
 import Slider from "./Slider";
+import BoxActivity from "./BoxActivity";
+import DonutChart from "./Charts/DonutChart";
+import StackedBarChart from "./Charts/StackedBarChart";
 export default function Home() {
   return (
     <div  className="mt-3">
       {/* Info Cards */}
-      <div className="flex gap-x-5 ">
+      <div className="flex flex-col lg:flex-row  gap-5 ">
         {/* Left Card */}
-        <div className="card-info-bg w-2/3 h-[300px]  flex justify-between rounded-2xl p-16">
+        <div className="card-info-bg w-full lg:w-2/3 h-[250px] md:h-[300px]  flex justify-between rounded-2xl p-8 md:p-16">
           <div className="">
-            <h2 className="text-white  font-bold text-3xl">Welcom back</h2>
-            <h2 className="text-white  font-bold text-3xl">Zarrin Ebrahimi</h2>
-            <span className="text-gray-200 w-[500px] my-3 block">
+            <h2 className="text-white  font-bold text-xl md:text-3xl">Welcom back</h2>
+            <h2 className="text-white  font-bold text-xl md:text-3xl">Zarrin Ebrahimi</h2>
+            <span className="text-gray-200 md:w-[500px] my-3 block md:text-base text-xs">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi,
               quos! Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Atque, culpa?
@@ -31,8 +34,29 @@ export default function Home() {
           </div>
         </div>
         {/* Right Card */}
-        <div  className="w-1/3">
+        <div  className=" w-full lg:w-1/3">
             <Slider/>
+        </div>
+      </div>
+      {/* Box Activity User */}
+      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 my-6">
+        <BoxActivity title={'Total active users'}  number={'18,765'} percent={'+2.6%'}/>
+        <BoxActivity title={'Total installed'}  number={'1,765'} percent={'+1.3%'}/>
+        <BoxActivity title={'Total downloads'}  number={'10,760'} percent={'+10.3%'}/>
+      </div>
+      {/* Dounut Chart */} 
+      <div  className=" mb-6  gap-5  flex flex-col lg:flex-row ">
+        <div  className="shadow p-3 w-full lg:w-1/3 rounded-2xl flex flex-col items-center lg:items-start ">
+          <span className="font-bold tracking-wide text-gray-900">Current download</span>
+          <p  className="text-sm text-gray-400">Downloaded by operating system</p>
+        <DonutChart/>
+        </div>
+        <div  className="shadow p-3  w-full lg:2/3 rounded-2xl flex flex-col ">
+         <div  className="mb-3">
+           <span className="font-bold tracking-wide text-gray-900">Area installed</span>
+          <p  className="text-sm text-gray-400">(+43%) than last year</p>
+         </div>
+        <StackedBarChart/>
         </div>
       </div>
     </div>
