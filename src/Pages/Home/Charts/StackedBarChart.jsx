@@ -28,7 +28,7 @@ const data = [
 
 const StackedBarChart = () => {
   return (
-  <div className="w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] ">
+  <div className="w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px]  pr-5 ">
       <ResponsiveContainer width={'100%'}  height={"100%"}>
       <BarChart width={950} height={350} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
