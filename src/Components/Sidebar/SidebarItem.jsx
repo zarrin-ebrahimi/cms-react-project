@@ -58,9 +58,10 @@ const SidebarItem = ({ item }) => {
               invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible z-50"
             >
               {item.submenu.map((subItem) => (
-                <NavLink to={subItem.path}>
+                <NavLink to={subItem.path}
+                    key={subItem.id}
+                >
                   <li
-                    key={subItem}
                     className="p-1.5 cursor-pointer text-gray-500   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
                   >
                     {subItem.label}

@@ -16,7 +16,7 @@ export const menuItems = [
   {
     id: "product",
     label: "Product",
-    path: '/produt',
+    path: '/product/list',
     icon:(className) => <FaShop className={className}/> ,
     submenu: [
       { id: "add", label: "Add", path: "/product/add"},
@@ -32,7 +32,7 @@ export const menuItems = [
     icon:(className) => <PiUserSwitchDuotone className={className}/> ,
     submenu: [
       { id: "add", label: "Add", path: "/user/add" },
-      { id: "edite", label: "Edite", path: "/user/edit" },
+      // { id: "edite", label: "Edite", path: "/user/edit" },
       { id: "list", label: "List", path: "/users" },
     ],
   },

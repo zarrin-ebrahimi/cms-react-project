@@ -5,19 +5,56 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa6";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiFillEdit } from "react-icons/ai";
-import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import Modal from "../Modal/Modal";
 import { useModal } from "../../Hooks/useModal";
+import EditUserModal from "../Modal/EditUserModal";
 export default function Users() {
   const [allUsers, setAllUsers] = useState([]);
   const { isOpen, openModal, closeModal } = useModal();
   const [userID, setUserID] = useState(null);
+  const mainUser = allUsers.find((user) => user.id === userID);
+  const editModal = useModal();
+  const deleteModal = useModal();
 
   const handleDeleteClick = (id) => {
-    openModal();
+    deleteModal.openModal();
     setUserID(id);
     console.log(id);
+  };
+
+  const handleEditClick = (id) => {
+    setUserID(id);
+    editModal.openModal();
+    console.log(id);
+  };
+
+  const handleConfirmUpdate = async(updatedUser) => {
+    console.log(updatedUser);
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/users/${updatedUser.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Something Went Wrong");
+      }
+      setAllUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === updatedUser.id ? updatedUser : user
+        )
+      );
+
+      editModal.closeModal();
+    } catch (err) {
+      console.error("Error Updating User", err);
+    }
   };
 
   const handleConfirmDeleteUser = async () => {
@@ -36,6 +73,7 @@ export default function Users() {
 
     closeModal();
   };
+
   useEffect(() => {
     fetch(`http://localhost:8000/api/users`)
       .then((res) => res.json())
@@ -70,7 +108,7 @@ export default function Users() {
                     className=" focus:outline-none p-2.5 w-full rounded-md border-gray-200 "
                   />
                 </div>
-                {/* Filtered Product */}
+                {/* Filtered Users */}
                 <div className="flex items-center px-3 gap-x-2">
                   <FaFilter
                     size={20}
@@ -80,7 +118,7 @@ export default function Users() {
                 </div>
               </div>
 
-              {/* Product Table */}
+              {/* Users Table */}
               <div className="max-h-[600px] overflow-auto ">
                 <table className="min-w-full text-sm text-left text-gray-500">
                   {/* Table Head */}
@@ -97,7 +135,10 @@ export default function Users() {
                   <tbody className="bg-white">
                     {/* Product Row */}
                     {allUsers.map((user) => (
-                      <tr className="border-y  border-gray-200 hover:bg-gray-50">
+                      <tr
+                        key={user.id}
+                        className="border-y  border-gray-200 hover:bg-gray-50"
+                      >
                         <td className="flex items-center gap-3 px-6 py-4">
                           <img
                             src={`/images/Icons/face-${user.id}.png`}
@@ -130,13 +171,14 @@ export default function Users() {
                             className="absolute w-36  top-15 shadow-xl right-14 submenue-sidebar-active p-1.5 rounded-lg  flex flex-col gap-y-1 z-40
                            invisible opacity-0 group-hover:opacity-100 delay-75 group-hover:visible"
                           >
-                            <Link
-                              to={`/product/edit/${user.id}`}
+                            <div
+                              onClick={() => handleEditClick(user.id)}
+                              // to={`/product/edit/${user.id}`}
                               className="p-1.5 flex items-center gap-x-4 cursor-pointer text-black   text-[14px] rounded-md hover:bg-gray-100/90   z-10"
                             >
                               <AiFillEdit size={20} />
                               <span> Edite </span>
-                            </Link>
+                            </div>
 
                             <div
                               onClick={() => handleDeleteClick(user.id)}
@@ -157,9 +199,15 @@ export default function Users() {
         </div>
       </div>
 
+      <EditUserModal
+        isOpen={editModal.isOpen}
+        onClose={editModal.closeModal}
+        onConfirmUpdate={handleConfirmUpdate}
+        user={mainUser}
+      />
       <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
+        isOpen={deleteModal.isOpen}
+        onClose={deleteModal.closeModal}
         onConfirm={handleConfirmDeleteUser}
         message={"Are you sure want to delete?"}
         confirmTxt="Delete"

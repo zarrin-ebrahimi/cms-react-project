@@ -6,7 +6,7 @@ import { SidebarProvider } from "./Contexts/SidebarContext";
 import { menuItems } from "./Components/Sidebar/menuItems";
 import { Routes, Route } from "react-router-dom";
 import Comments from "./Components/Comments/Comments";
-import Products from "./Components/Products/Products";
+// import Products from "./Components/Products/Products";
 import Users from "./Components/Users/Users";
 import Orders from "./Components/Orders/Orders";
 import Offs from "./Components/Off/Offs";
@@ -16,6 +16,7 @@ import ProductDetail from "./Components/Products/ProductDetail";
 import EditProduct from "./Components/Products/EditProduct";
 import Home from "./Pages/Home/Home";
 import { ProductProvider } from "./Contexts/ProductContext";
+import AddUser from "./Components/Users/AddUser";
 
 export default function App() {
   return (
@@ -28,7 +29,7 @@ export default function App() {
             <div className="content flex-grow bg-white px-5 md:px-8 ">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/product" element={<Products />} />
+                {/* <Route path="/product" element={<Products />} /> */}
                 <Route path="/comments" element={<Comments />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/offs" element={<Offs />} />
@@ -38,6 +39,7 @@ export default function App() {
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/product/edit/:id" element={<EditProduct />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/user/add" element={<AddUser />} />
               </Routes>
             </div>
           </div>
