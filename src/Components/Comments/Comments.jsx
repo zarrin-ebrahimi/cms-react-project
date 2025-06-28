@@ -4,7 +4,6 @@ import { HiMiniStop } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa6";
 import { FiMoreVertical } from "react-icons/fi";
-import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import { HiCheckCircle } from "react-icons/hi";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -14,37 +13,88 @@ export default function hello() {
   const { isOpen, openModal, closeModal } = useModal();
   const [comments, setComments] = useState([]);
   const [commentID, setCommentID] = useState(null);
-  // const acceptModal = useModal();
-  // const rejectModal = useModal();
-  // const deleteModal = useModal();
-
+  const [actionType, setActionType] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   useEffect(() => {
-    fetch(`http://localhost:8000/api/comments`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/comments`)
       .then((res) => res.json())
       .then((comments) => setComments(comments));
   }, []);
 
   const handleDeleteClick = (id) => {
     setCommentID(id);
+    setActionType("delete");
+    setModalTitle("Are you sure to delete this comment?");
     openModal();
   };
 
-  const confirmDeleteComment = async () => {
-    try{
-      const res = await fetch(`http://localhost:8000/api/comments/${commentID}`, {
-        method: 'DELETE'
-      })
-      if(res.ok){
-        setComments(prev => prev.filter(comment => comment.id !== commentID))
-      }else{
-        console.error('Error deleting comment', res.statusText)
+  const handleRejectClick = (id) => {
+    setCommentID(id);
+    setActionType("reject");
+    setModalTitle("Are you sure to reject this comment?");
+    openModal();
+  };
+  const handleAcceptClick = (id) => {
+    setCommentID(id);
+    setActionType("accept");
+    setModalTitle("Are you sure to accept this comment?");
+    openModal();
+  };
+  const deleteComment = async () => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comments/${commentID}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (res.ok) {
+        setComments((prev) =>
+          prev.filter((comment) => comment.id !== commentID)
+        );
+      } else {
+        console.error("Error deleting comment", res.statusText);
       }
-    }catch(err) {
+    } catch (err) {
       console.error("Error deleting comment", err);
     }
-    closeModal()
+    closeModal();
   };
 
+  const confirmRejectComment = async () => {
+    console.log("hello");
+    closeModal();
+  };
+
+  const acceptComment = () => {
+     fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
+      method:'PUT'
+     }).then(res => res.json())
+     .then(result => {
+    console.log("hello");
+    closeModal(); 
+    
+     })
+
+  };
+
+
+  const handleConfirm = async() =>{
+    try{
+      switch(actionType){
+        case 'delete' :
+          await deleteComment()
+          break; 
+        case 'accept' :
+          await acceptComment()
+          break ;
+
+      }
+      closeModal()
+    }catch(err) {
+      console.error('err' , err)
+    }
+  }
   return (
     <>
       <div className="mb-20">
@@ -173,11 +223,11 @@ export default function hello() {
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
-        onConfirm={confirmDeleteComment}
-        message={"Are you sure want to delete?"}
-        confirmTxt="Delete"
-        cancelTxt="Cancel"
-        title={"Delete"}
+        onConfirm={handleConfirm}
+        message={modalTitle}
+        confirmTxt="yes"
+        cancelTxt="No"
+        title={"Yes"}
       />
     </>
   );

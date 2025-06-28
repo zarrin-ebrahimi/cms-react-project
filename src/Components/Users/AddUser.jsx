@@ -37,7 +37,7 @@ export default function AddUser() {
           Create a new user
         </h2>
       </div>
-      <div className="flex flex-col lg:flex-row gap-x-5 w-full">
+      <div className="flex flex-col gap-y-2 lg:flex-row gap-x-5 w-full">
         <div className="bg-white shadow-md lg:w-1/3  rounded-2xl flex items-center justify-center w-full  ">
           {/* Drop Image Product */}
           <div className="flex flex-col items-center  ">

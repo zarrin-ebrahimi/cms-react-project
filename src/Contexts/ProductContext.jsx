@@ -9,7 +9,8 @@ export const ProductProvider = ({ children }) => {
 
   const getAllProducts = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/products/");
+      // const res = await fetch("http://localhost:8000/api/");
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products/`)
       const products = await res.json();
       console.log(res);
       setAllProducts(products);
@@ -22,7 +23,7 @@ export const ProductProvider = ({ children }) => {
   const deleteProduct = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:8000/api/products/${id}`,
+       `${import.meta.env.VITE_API_BASE_URL}/products/${id}`,
         {
           method: "DELETE",
         }
@@ -42,7 +43,7 @@ export const ProductProvider = ({ children }) => {
 
   const editProduct = async (id, updatedProduct) => {
        try{
-        const res = await fetch(`http://localhost:8000/api/products/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products/${id}`, {
           method : 'PUT' , 
           headers :{
             'Content-Type' : 'application/json'

@@ -33,7 +33,7 @@ export default function Users() {
     console.log(updatedUser);
     try {
       const res = await fetch(
-        `http://localhost:8000/api/users/${updatedUser.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/${updatedUser.id}`,
         {
           method: "PUT",
           headers: {
@@ -59,7 +59,7 @@ export default function Users() {
 
   const handleConfirmDeleteUser = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/users/${userID}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${userID}`, {
         method: "DELETE",
       });
       if (res.ok) {
@@ -75,7 +75,7 @@ export default function Users() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/users`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/users`)
       .then((res) => res.json())
       .then((users) => setAllUsers(users));
   }, []);
