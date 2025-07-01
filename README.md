@@ -1,12 +1,5 @@
-# React + Vite
+This project is a comprehensive dashboard application designed for an e-commerce store. It features a main homepage, product management sections including product listing, editing, and creation, as well as order management with similar capabilities. Additionally, it includes a comment display module. The frontend is developed using React with Tailwind CSS for styling and utilizes JavaScript throughout.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The backend is built with Node.js and employs a MySQL database for persistent data storage. Some functionalities, such as comment approval and rejection, are currently under development due to incomplete backend implementation.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The application is fully responsive, ensuring an optimal user experience across various devices and screen sizes. To enhance usability and data visualization, third-party libraries have been integrated, including charting tools for analytics and a product zoom feature for detailed viewing.
